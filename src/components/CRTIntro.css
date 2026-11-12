@@ -1,0 +1,238 @@
+
+/* =========================================
+   KDS. — CRT INTRO
+   Cream Background / Black Typography
+========================================= */
+
+.crt-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: grid;
+  place-items: center;
+  background: #f4f1e9;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* TV SCREEN */
+
+.crt-screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #f4f1e9;
+  overflow: hidden;
+  transform: scaleY(0);
+  opacity: 0;
+}
+
+/* POWER-ON LINE */
+
+.crt-power .crt-screen {
+  opacity: 1;
+  transform: scaleY(0.003);
+  background: #010000;
+
+  box-shadow: 0 0 45px rgba(1, 0, 0, 0.25);
+
+  transition:
+    transform 0.35s ease-out,
+    opacity 0.2s ease-out;
+}
+
+/* SCREEN EXPANSION */
+
+.crt-boot .crt-screen,
+.crt-name .crt-screen {
+  opacity: 1;
+  transform: scaleY(1);
+  background: #f4f1e9;
+  box-shadow: none;
+
+  transition:
+    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.3s ease;
+}
+
+/* SUBTLE CRT SCANLINES */
+
+.crt-scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.18;
+
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 3px,
+    rgba(1, 0, 0, 0.09) 4px
+  );
+}
+
+/* NAME CONTAINER */
+
+.crt-identity {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  gap: 14px;
+  padding: 24px;
+
+  color: #010000;
+  text-align: center;
+
+  opacity: 0;
+  transform: scale(1.05);
+}
+
+/* NAME REVEAL */
+
+.crt-name .crt-identity {
+  opacity: 1;
+  transform: scale(1);
+
+  animation: crt-flicker 0.5s ease-out both;
+}
+
+/* MAIN KDS LETTERING */
+
+.crt-kds {
+  font-family: "Cormorant Garamond", Georgia, serif;
+
+  font-size: clamp(100px, 18vw, 260px);
+  font-weight: 400;
+  line-height: 0.85;
+  letter-spacing: -0.065em;
+
+  color: #010000;
+}
+
+/* FULL NAME */
+
+.crt-full-name {
+  font-family: "Inter", Arial, sans-serif;
+
+  font-size: clamp(11px, 1.3vw, 16px);
+  font-weight: 500;
+  letter-spacing: 0.3em;
+
+  color: #010000;
+}
+
+/* ROLE */
+
+.crt-role {
+  font-family: "Inter", Arial, sans-serif;
+
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+
+  color: #6c6b6b;
+}
+
+/* SKIP INTRO */
+
+.crt-skip {
+  position: absolute;
+  bottom: 32px;
+  right: 32px;
+  z-index: 2;
+
+  background: transparent;
+  border: none;
+
+  color: #010000;
+
+  font-family: "Inter", Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.crt-skip:hover {
+  opacity: 0.5;
+}
+
+.crt-skip:focus-visible {
+  outline: 2px solid #010000;
+  outline-offset: 5px;
+}
+
+/* PREVENT SCROLLING DURING INTRO */
+
+body.crt-intro-active {
+  overflow: hidden;
+}
+
+/* TELEVISION FLICKER */
+
+@keyframes crt-flicker {
+  0% {
+    opacity: 0;
+    filter: blur(8px);
+  }
+
+  20% {
+    opacity: 0.8;
+  }
+
+  30% {
+    opacity: 0.2;
+  }
+
+  45% {
+    opacity: 1;
+    filter: blur(2px);
+  }
+
+  60% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+/* MOBILE */
+
+@media (max-width: 640px) {
+  .crt-kds {
+    font-size: clamp(90px, 24vw, 150px);
+  }
+
+  .crt-full-name {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+  }
+
+  .crt-role {
+    font-size: 9px;
+    letter-spacing: 0.12em;
+  }
+
+  .crt-skip {
+    right: 20px;
+    bottom: 24px;
+  }
+}
+
+/* ACCESSIBILITY */
+
+@media (prefers-reduced-motion: reduce) {
+  .crt-intro {
+    display: none;
+  }
+}

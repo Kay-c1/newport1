@@ -80,7 +80,7 @@ export default function GreenhouseProject() {
 
   <div className="border border-black p-2">
     <img
-      src="/images/greenhouse-dashboard.png"
+      src="/images/p1.jpg"
       alt="Greenhouse monitoring application dashboard"
       className="block h-auto w-full"
     />

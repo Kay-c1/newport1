@@ -1,17 +1,24 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap");
 
 @import "tailwindcss";
 
+/* =========================================
+   KDS. — DESIGN SYSTEM
+========================================= */
+
 :root {
-  --background: #F4F1E9;
+  --background: #f4f1e9;
   --foreground: #010000;
-  --surface: #E8E5DD;
-  --muted: #6C6B6B;
+  --surface: #e8e5dd;
+  --muted: #6c6b6b;
   --border: rgba(1, 0, 0, 0.25);
 
   --font-display: "Cormorant Garamond", Georgia, serif;
   --font-body: "Inter", Arial, sans-serif;
+
+  --content-width: 1280px;
+  --section-spacing: clamp(96px, 12vw, 176px);
 }
 
 @theme inline {
@@ -21,22 +28,29 @@
   --font-serif: var(--font-display);
 }
 
+/* =========================================
+   GLOBAL RESET
+========================================= */
+
 * {
   box-sizing: border-box;
 }
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 80px;
 }
 
 body {
   margin: 0;
+  min-width: 320px;
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-body);
   font-size: 14px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 a {
@@ -49,17 +63,67 @@ a {
   -webkit-tap-highlight-color: transparent;
 }
 
+button {
+  font: inherit;
+}
+
+button:not(:disabled) {
+  cursor: pointer;
+}
+
+img,
+video,
+canvas,
+svg {
+  max-width: 100%;
+}
+
+img,
+video {
+  height: auto;
+}
+
 ::selection {
   background: var(--foreground);
   color: var(--background);
 }
 
+:focus-visible {
+  outline: 2px solid var(--foreground);
+  outline-offset: 4px;
+}
+
+/* =========================================
+   LAYOUT
+========================================= */
+
 .page-shell {
-  width: min(100% - 48px, 1280px);
+  width: min(100% - 48px, var(--content-width));
   margin-inline: auto;
 }
 
+.section-spacing {
+  padding-block: var(--section-spacing);
+}
+
+.section-divider {
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+}
+
+.editorial-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 24px;
+}
+
+/* =========================================
+   TYPOGRAPHY
+========================================= */
+
 .editorial-label {
+  font-family: var(--font-body);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 1.5px;
@@ -74,13 +138,410 @@ a {
   line-height: 0.95;
 }
 
+.hero-heading {
+  font-family: var(--font-display);
+  font-size: clamp(64px, 9vw, 144px);
+  font-weight: 400;
+  letter-spacing: -0.055em;
+  line-height: 0.88;
+  overflow-wrap: anywhere;
+}
+
+.section-heading {
+  font-family: var(--font-display);
+  font-size: clamp(52px, 7vw, 104px);
+  font-weight: 400;
+  letter-spacing: -0.045em;
+  line-height: 0.95;
+}
+
+.project-heading {
+  font-family: var(--font-display);
+  font-size: clamp(42px, 5vw, 80px);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.body-large {
+  font-size: clamp(15px, 1.5vw, 19px);
+  line-height: 1.7;
+}
+
+.text-muted {
+  color: var(--muted);
+}
+
 .rule {
   border: 0;
   border-top: 1px solid var(--foreground);
 }
 
+/* =========================================
+   EDITORIAL BUTTONS
+========================================= */
+
+.editorial-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+
+  min-height: 52px;
+  padding: 14px 24px;
+
+  border: 1px solid var(--foreground);
+  border-radius: 0;
+
+  background-color: var(--foreground);
+  color: var(--background);
+
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  line-height: 1.4;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+
+  cursor: pointer;
+
+  transition:
+    background-color 250ms ease,
+    color 250ms ease,
+    transform 250ms ease;
+}
+
+.editorial-button:hover {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+.editorial-button:active {
+  transform: scale(0.98);
+}
+
+/* Outlined variant */
+
+.editorial-button-outline {
+  background-color: transparent;
+  color: var(--foreground);
+}
+
+.editorial-button-outline:hover {
+  background-color: var(--foreground);
+  color: var(--background);
+}
+
+/* Button icons inherit the text color */
+
+.editorial-button > span,
+.editorial-button > svg {
+  color: inherit;
+  flex-shrink: 0;
+}
+
+/* =========================================
+   PROJECT ARROW BUTTONS
+========================================= */
+
+.project-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  flex-shrink: 0;
+
+  padding: 0;
+
+  border: 1px solid var(--foreground);
+  border-radius: 0;
+
+  background-color: transparent;
+  color: var(--foreground);
+
+  text-decoration: none;
+  cursor: pointer;
+
+  transition:
+    background-color 250ms ease,
+    color 250ms ease;
+}
+
+.project-arrow-icon {
+  display: block;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+
+  color: inherit;
+  stroke: currentColor;
+
+  transition: transform 250ms ease;
+}
+
+.project-arrow:hover,
+.project-arrow:focus-visible {
+  background-color: var(--foreground);
+  color: var(--background);
+}
+
+.project-arrow:hover .project-arrow-icon,
+.project-arrow:focus-visible .project-arrow-icon {
+  transform: translate(2px, -2px);
+}
+
+/* =========================================
+   EDITORIAL LINKS
+========================================= */
+
+.editorial-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.editorial-link-arrow {
+  display: inline-block;
+  color: inherit;
+  transition: transform 250ms ease;
+}
+
+.editorial-link:hover .editorial-link-arrow {
+  transform: translate(4px, -4px);
+}
+
+/* =========================================
+   PROJECT SHOWCASE
+========================================= */
+
+.project-showcase {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(32px, 5vw, 80px);
+}
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.project-card-media {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  background: var(--surface);
+}
+
+.project-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.project-card:hover .project-card-media img,
+.project-card:focus-within .project-card-media img {
+  transform: scale(1.045);
+}
+
+.project-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-block: 24px;
+}
+
+.project-card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  color: var(--muted);
+}
+
+.project-card-title {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 4vw, 64px);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.project-card-description {
+  max-width: 540px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+/* =========================================
+   SKILLS AND EXPERIENCE
+========================================= */
+
+.skill-row {
+  display: grid;
+  grid-template-columns: minmax(120px, 1fr) 2fr;
+  gap: 24px;
+  padding-block: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.experience-item {
+  display: grid;
+  grid-template-columns: minmax(160px, 1fr) 2fr;
+  gap: 32px;
+  padding-block: 32px;
+  border-top: 1px solid var(--border);
+}
+
+/* =========================================
+   ANIMATION UTILITIES
+========================================= */
+
+.reveal-up {
+  opacity: 1;
+  transform: none;
+}
+
+.js-animations-ready .reveal-up {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+.reveal-up.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.hover-lift {
+  transition: transform 0.35s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+}
+
+/* =========================================
+   ACCESSIBILITY
+========================================= */
+
+.editorial-button:focus-visible,
+.project-arrow:focus-visible,
+.editorial-link:focus-visible {
+  outline: 2px solid var(--foreground);
+  outline-offset: 4px;
+}
+
+/* =========================================
+   RESPONSIVE DESIGN
+========================================= */
+
+@media (max-width: 1024px) {
+  .editorial-grid {
+    gap: 16px;
+  }
+
+  .project-showcase {
+    gap: 40px 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --section-spacing: 88px;
+  }
+
+  .project-showcase {
+    grid-template-columns: 1fr;
+  }
+
+  .skill-row,
+  .experience-item {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .editorial-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 640px) {
+  :root {
+    --section-spacing: 72px;
+  }
+
   .page-shell {
     width: calc(100% - 32px);
   }
+
+  .hero-heading {
+    font-size: clamp(54px, 14vw, 84px);
+  }
+
+  .section-heading {
+    font-size: clamp(46px, 12vw, 72px);
+  }
+
+  .editorial-label {
+    font-size: 10px;
+    letter-spacing: 1.2px;
+  }
+
+  .project-card-content {
+    padding-block: 20px;
+  }
+
+  .editorial-button {
+    min-height: 48px;
+    padding: 12px 18px;
+  }
+}
+
+/* =========================================
+   REDUCED MOTION
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .js-animations-ready .reveal-up {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Dark mode values are defined globally so case-study pages inherit them. */
+:root[data-theme="dark"] {
+  --background: #101010;
+  --foreground: #f4f1e9;
+  --surface: #202020;
+  --muted: #b0aca5;
+  --border: rgba(244,241,233,0.28);
 }
